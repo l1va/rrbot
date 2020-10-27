@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<robot name="rrbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:property name="height" value="2" />
+
+    <link name="world"/>
+
+    <joint name="grounding" type="fixed">
+        <parent link="world"/>
+        <child link="link1"/>
+        <origin
+                xyz="0 0 0"
+                rpy="0 0 0"/>
+    </joint>
+
+    <link name="link1">
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="1 1 ${height}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="1.9 1.9 ${height}"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="1"/>
+            <inertia
+                    ixx="1.0" ixy="0.0" ixz="0.0"
+                    iyy="1.0" iyz="0.0"
+                    izz="1.0"/>
+        </inertial>
+    </link>
+
+    <link name="link2">
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="1 1 ${height}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="1 1 ${height}"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="1"/>
+            <inertia
+                    ixx="1.0" ixy="0.0" ixz="0.0"
+                    iyy="1.0" iyz="0.0"
+                    izz="1.0"/>
+        </inertial>
+    </link>
+    <link name="link3">
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="1 1 ${height}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="1 1 ${height}"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="1"/>
+            <inertia
+                    ixx="1.0" ixy="0.0" ixz="0.0"
+                    iyy="1.0" iyz="0.0"
+                    izz="1.0"/>
+        </inertial>
+    </link>
+
+    <joint name="joint1" type="revolute">
+            <origin xyz="0.312 0 0.324" rpy="0 0 0"/>
+            <parent link="link1"/>
+            <child link="link2"/>
+<!--            <axis xyz="0 1 0"/>-->
+            <limit
+                    lower="-1.0472"
+                    upper="1.32645"
+                    effort="1000"
+                    velocity="2.00713"/>
+<!--            &lt;!&ndash;  limit effort, boudns? range=136 ? ? and dynamics? &ndash;&gt;-->
+<!--            <dynamics damping="72" friction="50"/>-->
+        </joint>
+
+    <joint name="joint2" type="revolute">
+            <origin xyz="0.312 0 0.324" rpy="0 0 0"/>
+            <parent link="link2"/>
+            <child link="link3"/>
+            <axis xyz="0 1 0"/>
+            <limit
+                    lower="-1.0472"
+                    upper="1.32645"
+                    effort="1000"
+                    velocity="2.00713"/>
+            <!--  limit effort, boudns? range=136 ? ? and dynamics? -->
+            <dynamics damping="72" friction="50"/>
+        </joint>
+
+ <xacro:macro name="joint_transmission_macro" params="joint_name">
+            <transmission name="${joint_name}_transmssion">
+                <type>transmission_interface/SimpleTransmission</type>
+                <joint name="${joint_name}">
+                    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+                </joint>
+                <actuator name="${joint_name}_motor">
+                    <hardwareInterface>EffortJointInterface</hardwareInterface>
+                    <mechanicalReduction>1</mechanicalReduction>
+                </actuator>
+            </transmission>
+            <gazebo reference="${joint_name}">
+                <implicitSpringDamper>1</implicitSpringDamper>
+            </gazebo>
+        </xacro:macro>
+
+        <joint_transmission_macro joint_name="joint1"/>
+        <joint_transmission_macro joint_name="joint2"/>
+<!--        <joint_transmission_macro joint_name="joint3"/>
+        <joint_transmission_macro joint_name="joint4"/>
+        <joint_transmission_macro joint_name="joint5"/>-->
+
+
+
+    <gazebo>
+        <plugin filename="libgazebo_ros_control.so" name="ros_control">
+            <robotNamespace>/rrbot</robotNamespace>
+        </plugin>
+    </gazebo>
+</robot>

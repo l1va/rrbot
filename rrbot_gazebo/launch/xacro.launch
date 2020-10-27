@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!--    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"-->
+    <!--          args="-file $(find rrbot_description)/urdf/rrbot.urdf -urdf -z 0 -model rrbot"/>-->
+
+
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"></node>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"></node>
+
+
+    <param name="robot_description"
+      command="xacro --inorder '$(find rrbot_description)/urdf/rrbot.urdf.xacro'" />
+
+
+    <node name="rviz" pkg="rviz" type="rviz"/>
+
+
+</launch>

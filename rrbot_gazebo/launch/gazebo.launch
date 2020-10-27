@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+
+
+    <param name="robot_description"
+           command="xacro --inorder '$(find rrbot_description)/urdf/rrbot.urdf.xacro'"/>
+
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(find rrbot_gazebo)/worlds/our.world"/>
+        <arg name="paused" value="true"/>
+        <arg name="verbose" value="true"/>
+    </include>
+
+    <node name="spawn_robot" pkg="gazebo_ros" type="spawn_model"
+          args=" -urdf -model rrbot -param robot_description -z 1"/>
+
+
+<!--    <rosparam command="load" file="$(find rrbot_gazebo)/controllers/gazebo_control.yaml"/>
+
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+          output="screen" ns="/rrbot"
+          args="joint_state_controller joint1_position_controller joint2_position_controller "/>-->
+
+    <!--<node pkg="rrbot_gazebo" name="control_robot_python" type="control.py" output="screen"/>-->
+
+</launch>
