@@ -17,14 +17,14 @@
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <box size="1 1 ${height}"/>
+                <box size="5 0.5 ${height}"/>
             </geometry>
         </collision>
 
         <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="5 0 0" rpy="0 0 0"/>
             <geometry>
-                <box size="1.9 1.9 ${height}"/>
+                <box size="5 1.9 ${height}"/>
             </geometry>
             <material name="orange"/>
         </visual>
