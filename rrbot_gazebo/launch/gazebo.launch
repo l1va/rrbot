@@ -22,6 +22,6 @@
           output="screen" ns="/rrbot"
           args="joint_state_controller joint1_position_controller joint2_position_controller "/>
 
-    <!--<node pkg="rrbot_gazebo" name="control_robot_python" type="control.py" output="screen"/>-->
+    <node pkg="rrbot_gazebo" name="control_robot_python" type="control.py" output="screen"/>
 
 </launch>
